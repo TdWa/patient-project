@@ -4,8 +4,13 @@ const app = express()
 
 function formatDossier(dossier) {
   let printOut = ''
-  for (const [key, value] of Object.entries(dossier)) {
-    printOut += `${key}: ${value}<br>`
+  for (let [key, value] of Object.entries(dossier)) {
+    const capital = key.search(/[A-Z]/)
+    if (capital !== -1) {
+      key = key.replace(key[capital], ` ${key[capital]}`)
+    }
+    key = key.replace(key[0], key[0].toUpperCase())
+    printOut += `<strong>${key}:</strong><br>${value}<br><br>`
   }
   return printOut
 }
@@ -14,14 +19,18 @@ function render(patient) {
  return ` 
  <html>
     <head>
-      <title>Hospital</title>
+      <title>${patient.firstName} ${patient.lastName}</title>
+
+      <style>
+        h1 {
+          color: red;
+        }
+      </style>
     </head>
 
     <body>
-      <div>
-        <h1>Welcome ${patient.firstName} ${patient.lastName}</h1>
-        <p>${formatDossier(patient)}</p>
-      </div>
+      <h1>Patient: ${patient.firstName} ${patient.lastName}</h1>
+      <p>${formatDossier(patient)}</p>
     </body>
   </html>
   `
