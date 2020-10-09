@@ -17,7 +17,7 @@ function formatDossier(dossier) {
 
 function render(patient) {
  return ` 
- <html>
+  <html>
     <head>
       <title>${patient.firstName} ${patient.lastName}</title>
 
