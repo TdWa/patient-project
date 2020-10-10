@@ -5,11 +5,8 @@ const app = express()
 function formatDossier(dossier) {
   let printOut = ''
   for (let [key, value] of Object.entries(dossier)) {
-    const capital = key.search(/[A-Z]/)
-    if (capital !== -1) {
-      key = key.replace(key[capital], ` ${key[capital]}`)
-    }
-    key = key.replace(key[0], key[0].toUpperCase())
+    key = key.replace(/[^A-Z][A-Z]/g, (match) => match[0] + ' ' + match[1])
+    .replace(key[0], key[0].toUpperCase())
     printOut += `<strong>${key}:</strong><br>${value}<br><br>`
   }
   return printOut
